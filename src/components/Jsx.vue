@@ -6,7 +6,7 @@ export default defineComponent({
 
     },
     render(){
-        return <div>1sadas122112</div>
+        return <div>测试组件</div>
     }
 });
 </script>
