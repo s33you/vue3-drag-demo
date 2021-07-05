@@ -14,14 +14,12 @@ This template should help get you started developing with Vue 3 and Typescript i
 
 Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
 
-### If Using Volar
+### 基于Vue3的可拖拽式页面配置的复盘
 
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
-### If Using Vetur
 
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+### 动机
+
+1. 项目中基于vue2,没有用vuex,自己写了个eventBus 迭代修改十分不友好
+2. 结合Vue3的compositionApi 可以丢弃vuex
+3. 复盘项目，重新调整组件，数据的结构
