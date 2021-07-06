@@ -1,25 +1,32 @@
-# Vue 3 + Typescript + Vite
-
-This template should help get you started developing with Vue 3 and Typescript in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
-
-### If Using `<script setup>`
-
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
-
-### 基于Vue3的可拖拽式页面配置的复盘
 
 
+# 基于Vue3的可拖拽式页面配置的复盘  
+  
 
-### 动机
+## 动机
 
 1. 项目中基于vue2,没有用vuex,自己写了个eventBus 迭代修改十分不友好
 2. 结合Vue3的compositionApi 可以丢弃vuex
 3. 复盘项目，重新调整组件，数据的结构
+
+
+## 设计
+
+### 画布
+
+画布这一块不从视图上去过多分析了，渲染方式主要是通过遍历元素数组 elementArr 去渲染对应的元素，全局使用compositionApi去管理数据流向,舍弃了vuex,因为compositionApi足够强大,渲染是用jsx去做渲染,因为vue3对jsx的支持也更加nice了
+```javascript
+    setup(){
+        ...
+        return {elementArr,...}
+    }
+    render(){
+       return  elementArr.map(element=>{
+
+       })
+    }
+```
+
+### 基础组件
+
+
