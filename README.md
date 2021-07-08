@@ -29,4 +29,31 @@
 
 ### 基础组件
 
+**功能设计**
 
+1. 可拖拽，可配置能拖拽的方向和缩放的维度
+2. 具有层级，能够嵌套渲染
+3. 提供丰富的可配置项，是否可编辑，可拖拽等等
+
+**数据设计**  
+```javascript
+props:{
+    options:{
+        direction:'all'|'vertical'|'horizon' //可拖动方向，默认all
+        editable:false| true //默认true
+        dragable:false| true //默认true
+    }
+    element:{} // 元素信息本身
+    layout:{} //布局
+    style:{} //样式
+    active:false|true,
+    innerValue:string|number
+}
+provide{
+    'container':layout
+}
+//用于嵌套的情况下传入父级容器数据 container 定位
+inject:[
+    'container'
+]
+```
