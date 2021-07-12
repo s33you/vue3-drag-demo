@@ -15,15 +15,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { ElCard, ElButton } from "element-plus";
 import { componentList } from "@/hooks/useComponents";
 export default defineComponent({
-  components: {
-    ElCard,
-    ElButton,
-  },
+
   setup() {
     const components = reactive(componentList);
+    //拖拽事件
     const handleDrag = (e: any) => {
       e.dataTransfer.setData("index", e.target.dataset.index);
     };
