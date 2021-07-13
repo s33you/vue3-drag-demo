@@ -1,18 +1,22 @@
 
-type customComponent  = 'c-button'| 'c-text'|'el-button'
-interface BaseComponent{
-    layout:{
-        width:number,
-        height:number,
-        top:number,
-        left:number,
-    }
-    style:{
-        [key in keyof CSSStyleDeclaration]?:any
-    },
+type customComponent  = string | 'c-button'| 'c-text'|'el-button'|'el-select' 
+type Style = {
+    [key in keyof CSSStyleDeclaration]?: any
+}
+type Layout = {
+    width: number,
+    height: number,
+    top: number,
+    left: number,
+}
+interface BaseComponent<P=any>{
+    layout:Layout
+    style:Style
     label:string,
     type:customComponent
-    componentValue:number|string
+    componentValue?:number|string,
+    modelValue?:number|string|boolean
+    props?:P
 }
 interface Operation<S>{
     (state:S,payload?:any): void;

@@ -1,8 +1,11 @@
 <script lang="tsx">
-import { defineComponent, h, resolveComponent } from "vue";
+import { defineComponent, h, PropType, resolveComponent } from "vue";
 import { store, componentList } from "@/hooks/useComponents";
-import getStyle from '@/uitls/style'
+import Operation from './Operation.vue'
 export default defineComponent({
+  components:{
+    Operation
+  },
   setup() {
     //监听放置事件
     const handleDrop = (e: DragEvent) => {
@@ -16,8 +19,8 @@ export default defineComponent({
       }
     };
     //拖拽结束事件
-    const handleDragOver = (e: DragEvent) => {
-      e.preventDefault();
+    const handleDragOver = (e: DragEvent) => {  
+      e.preventDefault(); 
       e.dataTransfer!.dropEffect = "move";
     };
     const components = store.state.components;
@@ -25,13 +28,10 @@ export default defineComponent({
   },
   render(){
     return  <div class="context" onDrop={this.handleDrop} onDragover={this.handleDragOver}>
-        <div>
-          {this.components.map(component=>{
-              return h(resolveComponent(component.type),{
-                style:getStyle(Object.assign(component.style,component.layout))
-              },)
-          })}        
-        </div>
+     {this.components.map(component=>{
+            return <Operation defaultStyle= {component.style} layout= {component.layout} element={component}/>
+          })}         
+  
   </div>
   }
 });
@@ -39,9 +39,8 @@ export default defineComponent({
 
 <style  lang="scss" scoped>
 .context {
-  flex-shrink: 0;
   flex-grow: 1;
   background: rgba(0, 0, 0, 0.12);
-  max-width: 80%;
+  overflow: hidden;
 }
 </style>

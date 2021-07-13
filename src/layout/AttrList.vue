@@ -1,6 +1,6 @@
 <template>
  <div class="attr-list">
-     属性列表
+     
  </div>
 </template>
 <script lang="ts">
@@ -16,6 +16,7 @@ export default defineComponent({
 .attr-list{
     width:256px;
     height: 100%;
-     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 </style>

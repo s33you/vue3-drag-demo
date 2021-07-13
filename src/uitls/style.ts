@@ -17,7 +17,6 @@ export default function getStyle(style: any, filter = [] as any) {
         "borderRadius",
         "textShadow",
     ];
-
     const result: any = {};
     if (!style) {
         return result
@@ -28,18 +27,12 @@ export default function getStyle(style: any, filter = [] as any) {
             if (key === "textShadow") {
                 if (style[key]) {
                     result[key] = `2px 2px ${shadowSize}px ${style[key]}`
-
                 }
                 return;
             }
-            if (key != "rotate") {
-                result[key] = style[key];
-
-                if (needUnit.includes(key)) {
-                    result[key] += "px";
-                }
-            } else {
-                result.transform = key + "(" + style[key] + "deg)";
+            result[key] = style[key];
+            if (needUnit.includes(key)) {
+                result[key] += "px";
             }
         }
     });

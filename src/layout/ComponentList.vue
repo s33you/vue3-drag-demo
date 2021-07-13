@@ -35,12 +35,14 @@ export default defineComponent({
   height: 100%;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-shrink: 0;
 }
 .card {
   width: calc(50% - 20px);
   margin: 5px;
-  height: auto;
+  height: 40px;
   max-height: 60px;
+  line-height: 24px;
   font-size: 14px;
   text-align: center;
   letter-spacing: 12px;
