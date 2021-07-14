@@ -1,5 +1,6 @@
 <script lang="tsx">
-import { defineComponent, h, PropType, ref, resolveComponent } from 'vue'
+import { defineComponent, PropType,resolveComponent,} from 'vue'
+import getStyle from '@/uitls/style'
 export default defineComponent({
     props:{
         defaultStyle:{
@@ -20,15 +21,12 @@ export default defineComponent({
             type:Object as PropType<BaseComponent>
         }
     },
-    setup(props,instance) {
-        const count = ref(0)
-        return {count}
-
-    },
     render(){
-       return  <div>
-        {h(resolveComponent(this.element.type),this.element.props?{...this.element.props}:{})}
-        </div>
+        const Component = resolveComponent(this.element.type) as 
+        return <Component/>
     }
+ 
 })
 </script>
+
+

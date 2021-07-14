@@ -11,7 +11,7 @@ export const componentList: Array<BaseComponent> = [
             left: 0
         },
         label: '按钮',
-        componentValue: '按钮文字'
+        text: '按钮文字'
     },
     {
         type: 'el-switch',
@@ -26,7 +26,24 @@ export const componentList: Array<BaseComponent> = [
             left: 0
         },
         label: '开关',
-        componentValue: '按钮文字',
+        text: '按钮文字',
+        modelValue:true,
+       
+    },
+    {
+        type: 'c-text',
+        style: {
+            color: "red",
+            fontSize: 19
+        },
+        layout: {
+            width: 100,
+            height: 100,
+            top: 0,
+            left: 0
+        },
+        label: '文本',
+        modelValue: '文本文字',
         props: {
             activeColor: "#13ce66",
             inactiveColor: "#ff4949"
@@ -60,7 +77,7 @@ export class ComponentsStore {
 }
 const mutations = {
     addComponent(state: State, component: BaseComponent) {
-        state.components.push(component)
+        state.components.push(Object.assign({}, component))
     },
 }
 const state: State = {

@@ -47,7 +47,11 @@ props:{
     layout:{} //布局
     style:{} //样式
     active:false|true,
-    innerValue:string|number
+    modelValue:string|number // 绑定值
+    text:"" 文字
+    props:{
+
+    }//额外的属性
 }
 provide{
     'container':layout

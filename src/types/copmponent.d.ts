@@ -1,5 +1,5 @@
 
-type customComponent  = string | 'c-button'| 'c-text'|'el-button'|'el-select' 
+type customComponent = 'c-button' | 'c-text' | 'el-button' | 'el-select' |'el-switch'
 type Style = {
     [key in keyof CSSStyleDeclaration]?: any
 }
@@ -14,8 +14,8 @@ interface BaseComponent<P=any>{
     style:Style
     label:string,
     type:customComponent
-    componentValue?:number|string,
     modelValue?:number|string|boolean
+    text?:string
     props?:P
 }
 interface Operation<S>{

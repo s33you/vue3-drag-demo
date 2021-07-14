@@ -9,7 +9,6 @@ export default defineComponent({
   setup() {
     //监听放置事件
     const handleDrop = (e: DragEvent) => {
-      console.log(e);
       e.preventDefault();
       e.stopPropagation();
       let index = e.dataTransfer!.getData("index");

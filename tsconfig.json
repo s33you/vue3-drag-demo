@@ -15,11 +15,11 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@": [
-        "./src"
-      ],
       "@/*": [
         "./src/*"
+      ],
+      "@custom": [
+        "./src/components/custom/*"
       ],
     },
   },

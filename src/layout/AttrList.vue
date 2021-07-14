@@ -1,13 +1,18 @@
 <template>
  <div class="attr-list">
-     
+     <el-switch v-model="value" @change="handleChange"/>
  </div>
 </template>
 <script lang="ts">
-import { defineComponent} from "vue"
+import { defineComponent, ref} from "vue"
 export default defineComponent({
     setup(){
-
+      const value = ref(false)
+      const handleChange = (value:any)=>{
+        console.log(value)
+      }
+      return {value,handleChange}
+      
     }
 });
 </script>
