@@ -1,6 +1,5 @@
 <script lang="tsx">
 import { defineComponent, PropType,resolveComponent,} from 'vue'
-import getStyle from '@/uitls/style'
 export default defineComponent({
     props:{
         defaultStyle:{
@@ -22,8 +21,10 @@ export default defineComponent({
         }
     },
     render(){
-        const Component = resolveComponent(this.element.type) as 
-        return <Component/>
+        const Component = resolveComponent(this.element.type) as any
+        return 
+        
+        <Component vModel={this.element.modelValue} />
     }
  
 })

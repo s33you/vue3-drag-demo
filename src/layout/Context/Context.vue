@@ -1,10 +1,10 @@
 <script lang="tsx">
 import { defineComponent, h, PropType, resolveComponent } from "vue";
 import { store, componentList } from "@/hooks/useComponents";
-import Operation from './Operation.vue'
+import Container from './Container.vue'
 export default defineComponent({
   components:{
-    Operation
+    Container
   },
   setup() {
     //监听放置事件
@@ -28,7 +28,7 @@ export default defineComponent({
   render(){
     return  <div class="context" onDrop={this.handleDrop} onDragover={this.handleDragOver}>
      {this.components.map(component=>{
-            return <Operation defaultStyle= {component.style} layout= {component.layout} element={component}/>
+            return <Container defaultStyle= {component.style} layout= {component.layout} element={component}/>
           })}         
   
   </div>
