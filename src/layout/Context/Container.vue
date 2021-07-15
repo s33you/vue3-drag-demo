@@ -1,5 +1,7 @@
 <script lang="tsx">
 import { defineComponent, PropType,resolveComponent,} from 'vue'
+import getStyle from '@/utils/style'
+import Shape from './Shape.vue'
 export default defineComponent({
     props:{
         defaultStyle:{
@@ -22,12 +24,21 @@ export default defineComponent({
     },
     render(){
         const Component = resolveComponent(this.element.type) as any
-        return 
+        return   <div class="container" style={getStyle(this.element.layout)}>
+            <Shape layout={this.element.layout}/>
+            <Component vModel={this.element.modelValue} />
+        </div>
         
-        <Component vModel={this.element.modelValue} />
     }
  
 })
 </script>
+<style lang="scss" scoped>
+.container {
+  position: relative;
+  resize: both;
+  background-color: #fff;
+}
+</style>
 
 

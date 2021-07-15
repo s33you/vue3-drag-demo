@@ -7,8 +7,8 @@ export const componentList: Array<BaseComponent> = [
         layout: {
             width: 100,
             height: 100,
-            top: 0,
-            left: 0
+            top: 10,
+            left: 10
         },
         label: '按钮',
         text: '按钮文字'
@@ -22,8 +22,8 @@ export const componentList: Array<BaseComponent> = [
         layout: {
             width: 100,
             height: 100,
-            top: 0,
-            left: 0
+            top: 10,
+            left: 10
         },
         label: '开关',
         text: '按钮文字',
@@ -39,8 +39,8 @@ export const componentList: Array<BaseComponent> = [
         layout: {
             width: 100,
             height: 100,
-            top: 0,
-            left: 0
+            top: 10,
+            left: 10
         },
         label: '文本',
         modelValue: '文本文字',
