@@ -4,7 +4,7 @@ import { store, componentList } from "@/hooks/useComponents";
 import Container from './Container.vue'
 export default defineComponent({
   components:{
-    Container
+    
   },
   setup() {
     //监听放置事件
@@ -28,9 +28,8 @@ export default defineComponent({
   render(){
     return  <div class="context" onDrop={this.handleDrop} onDragover={this.handleDragOver}>
      {this.components.map(component=>{
-            return <Container defaultStyle= {component.style} layout= {component.layout} element={component}/>
-          })}         
-  
+            return <Container defaultStyle= {component.style} layout= {component.layout} element={component} />
+      })}
   </div>
   }
 });

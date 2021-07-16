@@ -27,8 +27,8 @@ export const componentList: Array<BaseComponent> = [
         },
         label: '开关',
         text: '按钮文字',
-        modelValue:true,
-       
+        modelValue: true,
+
     },
     {
         type: 'c-text',
@@ -51,18 +51,37 @@ export const componentList: Array<BaseComponent> = [
     }
 ]
 type State = {
-    components: Array<BaseComponent>
+    components: Array<BaseComponent>,
+    currentComponent: BaseComponent | null
 }
 type MutationType = keyof (typeof mutations)
+type GettersKeys = keyof (typeof getters)
+type Getters = {
+    [key in GettersKeys]: any
+}
 export class ComponentsStore {
 
     state: State
     readonly mutations: MutationOpiton<State>
-    readonly getters?: MutationOpiton<State>
+    readonly privateGetters: MutationOpiton<State> = {}
+    readonly getters: Getters | {
+        [prpoName: string]: any
+    } = {}
     constructor(options: Options<State>) {
         this.state = reactive(options.state)
         this.mutations = options.mutations
-        this.getters = options.getters
+        if (options.getters) {
+            this.privateGetters = options.getters
+            Object.keys(this.privateGetters).forEach(key => {
+                console.log(this.privateGetters![key])
+                Object.defineProperty(this.getters, key, {
+                    get: () => {
+                        return this.privateGetters[key](this.state)
+                    }
+                })
+            })
+            console.log(this.getters)
+        }
     }
     public commit(type: MutationType, payload?: any) {
         if (this.mutations[type]) {
@@ -79,11 +98,21 @@ const mutations = {
     addComponent(state: State, component: BaseComponent) {
         state.components.push(Object.assign({}, component))
     },
+    setCurrentComponent(state: State, component: BaseComponent) {
+        state.currentComponent = component
+    }
 }
 const state: State = {
-    components: []
+    components: [],
+    currentComponent: null
+}
+const getters = {
+    isActiveComponent(state: State) {
+        return (component: BaseComponent) => { return state.currentComponent === component }
+    }
 }
 export const store = new ComponentsStore({
     state,
-    mutations
+    mutations,
+    getters
 })
