@@ -4,7 +4,7 @@
  * @param filter 过滤列表,不需要处理的字段
  */
 export default function getStyle(style: any, filter = [] as any) {
-    //过滤列表，需要处理的字段
+    //过滤列表，需要单位的字段
     const needUnit = [
         "fontSize",
         "width",
@@ -16,6 +16,7 @@ export default function getStyle(style: any, filter = [] as any) {
         "lineHeight",
         "borderRadius",
         "textShadow",
+        "rotate"
     ];
     const result: any = {};
     if (!style) {
@@ -24,11 +25,16 @@ export default function getStyle(style: any, filter = [] as any) {
     const shadowSize = style.hasOwnProperty('shadowSize') ? style["shadowSize"] : 2;
     Object.keys(style).forEach((key: string) => {
         if (!filter.includes(key)) {
+            //特殊处理shadow
             if (key === "textShadow") {
                 if (style[key]) {
                     result[key] = `2px 2px ${shadowSize}px ${style[key]}`
                 }
                 return;
+            }
+            if(key === "rotate"){
+                result.transform = key + '(' + style[key] + 'deg)'
+                return 
             }
             result[key] = style[key];
             if (needUnit.includes(key)) {

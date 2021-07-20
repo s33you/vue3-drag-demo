@@ -23,6 +23,10 @@ export default defineComponent({
 .text-area{
     width: 100%;
     height: 100%;
+    .input{
+        width: calc(100% - 4px);
+        padding: 0;
+    }
 }
 
 </style>

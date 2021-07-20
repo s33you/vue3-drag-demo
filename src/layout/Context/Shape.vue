@@ -1,15 +1,26 @@
 <template>
+  <i
+    class="el-icon-refresh rotate"
+    v-show="active && layout.rotate !== undefined"
+    @mousedown="handleRotate($event, layout, el)"
+  ></i>
   <div
     class="shape-point"
     :class="active ? 'active' : ''"
-    v-for="(item, index) in pointList"
+    v-for="(point, index) in pointList"
     :key="index"
-    :style="getPointStyle(layout, item)"
+    @mousedown="handleZoom($event, layout, el, point,container)"
+    :style="getPointStyle(layout, point)"
   ></div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { getPointStyle, pointList } from "@/hooks/useShape";
+import { defineComponent, PropType, computed, inject } from "vue";
+import {
+  getPointStyle,
+  pointList,
+  handleRotate,
+  handleZoom,
+} from "@/hooks/useShape";
 export default defineComponent({
   props: {
     layout: {
@@ -20,9 +31,25 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    component: {
+      type: Object,
+      required: true,
+    },
   },
-  setup() {
-    return { pointList, getPointStyle };
+  setup(props) {
+    const el = computed(() => {
+      return props.component.value.$el;
+    });
+
+    const container = inject<Layout>("container");
+    return {
+      pointList,
+      getPointStyle,
+      handleRotate,
+      el,
+      handleZoom,
+      container,
+    };
   },
 });
 </script>
@@ -33,9 +60,19 @@ export default defineComponent({
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  display: none;
 }
 .active {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.63);
   border: 1px solid #59c7f9;
+  display: inherit;
+}
+.rotate {
+  font-size: 20px;
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #18abf0;
 }
 </style>

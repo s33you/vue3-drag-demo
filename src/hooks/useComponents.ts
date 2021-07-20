@@ -1,5 +1,5 @@
 import { reactive, readonly } from "vue"
-
+import {cloneDeep} from 'lodash'
 export const componentList: Array<BaseComponent> = [
     {
         type: 'el-button',
@@ -8,7 +8,8 @@ export const componentList: Array<BaseComponent> = [
             width: 100,
             height: 100,
             top: 10,
-            left: 10
+            left: 10,
+            rotate:0
         },
         label: '按钮',
         text: '按钮文字'
@@ -40,7 +41,8 @@ export const componentList: Array<BaseComponent> = [
             width: 100,
             height: 100,
             top: 10,
-            left: 10
+            left: 10,
+            rotate: 0
         },
         label: '文本',
         modelValue: '文本文字',
@@ -73,14 +75,12 @@ export class ComponentsStore {
         if (options.getters) {
             this.privateGetters = options.getters
             Object.keys(this.privateGetters).forEach(key => {
-                console.log(this.privateGetters![key])
                 Object.defineProperty(this.getters, key, {
                     get: () => {
                         return this.privateGetters[key](this.state)
                     }
                 })
             })
-            console.log(this.getters)
         }
     }
     public commit(type: MutationType, payload?: any) {
@@ -96,11 +96,21 @@ export class ComponentsStore {
 }
 const mutations = {
     addComponent(state: State, component: BaseComponent) {
-        state.components.push(Object.assign({}, component))
+        //生产环境的DeepClone 还是选择 lodash
+        state.components.push(cloneDeep(component))
     },
     setCurrentComponent(state: State, component: BaseComponent) {
         state.currentComponent = component
-    }
+    },
+    setLayout({ currentComponent }: State, { top, left, width, height, rotate }: Layout) {
+        if (currentComponent) {
+            if (top) currentComponent.layout.top = top
+            if (left) currentComponent.layout.left = left
+            if (width) currentComponent.layout.width = width
+            if (height) currentComponent.layout.height = height
+            if (rotate) currentComponent.layout.rotate = rotate
+        }
+    },
 }
 const state: State = {
     components: [],

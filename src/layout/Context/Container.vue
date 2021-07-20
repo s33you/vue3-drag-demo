@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { computed, defineComponent, PropType, resolveComponent } from "vue";
+import { computed, defineComponent, PropType, ref, resolveComponent } from "vue";
 import getStyle from "@/utils/style";
 import Shape from "./Shape.vue";
 import { store } from "@/hooks/useComponents";
@@ -26,19 +26,22 @@ export default defineComponent({
   emits:['click'],
   render() {
     const Component = resolveComponent(this.element.type) as any;
+    const componentRef = ref({})
     return (
       <div
         class="container"
         style={getStyle(this.element.layout)}
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           store.commit("setCurrentComponent", this.element);
         }}
       >
         <Shape
           layout={this.element.layout}
           active={store.getters.isActiveComponent(this.element)}
+          component={componentRef}
         />
-        <Component vModel={this.element.modelValue} />
+        <Component vModel={this.element.modelValue} ref={componentRef}/>
       </div>
     );
   },
@@ -46,8 +49,8 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
+  margin-top:20px;
   position: relative;
   resize: both;
-  background-color: #fff;
 }
 </style>

@@ -8,6 +8,7 @@ type Layout = {
     height: number,
     top: number,
     left: number,
+    rotate?: number
 }
 interface BaseComponent<P=any>{
     layout:Layout
