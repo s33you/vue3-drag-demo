@@ -63,7 +63,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .container {
   margin-top: 20px;
-  position: relative;
+  position: absolute;
   resize: both;
 }
 </style>

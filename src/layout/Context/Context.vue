@@ -62,6 +62,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .context {
+  position: relative;
   flex-grow: 1;
   background: rgba(0, 0, 0, 0.12);
   overflow: hidden;
