@@ -98,6 +98,7 @@ const mutations = {
     addComponent(state: State, component: BaseComponent) {
         //生产环境的DeepClone 还是选择 lodash
         state.components.push(cloneDeep(component))
+        this.setCurrentComponent(state, state.components[state.components.length - 1])
     },
     setCurrentComponent(state: State, component: BaseComponent) {
         state.currentComponent = component

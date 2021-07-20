@@ -1,4 +1,4 @@
-import {  inject, reactive } from "vue";
+import { inject, reactive } from "vue";
 import { store } from "./useComponents";
 
 /**
@@ -25,17 +25,17 @@ export const pointList: Array<string> = reactive(["ne", "se", "sw", "nw", "w", "
  * @param layout  布局信息
  * @param el 元素本身
  */
-export  function handleRotate(e: MouseEvent, layout: Layout,el: HTMLElement) {
-    if(layout.rotate == undefined){
+export function handleRotate(e: MouseEvent, layout: Layout, el: HTMLElement) {
+    if (layout.rotate == undefined) {
         return
     }
-    const pos = {...layout}
+    const pos = { ...layout }
     e.stopPropagation()
     e.preventDefault()
     // 初始坐标和初始角度
     const startY = e.clientY
     const startX = e.clientX
-    const startRotate = pos.rotate! 
+    const startRotate = pos.rotate!
 
     // 获取元素中心点位置
     const rect = el.getBoundingClientRect()
@@ -54,7 +54,7 @@ export  function handleRotate(e: MouseEvent, layout: Layout,el: HTMLElement) {
         pos.rotate = Number((startRotate + rotateAfter - rotateBefore).toFixed(4))
         console.log(pos)
         // 修改当前组件样式
-        store.commit('setLayout',pos)
+        store.commit('setLayout', pos)
     }
     const up = () => {
         document.removeEventListener('mousemove', move)
@@ -112,13 +112,13 @@ export function getPointStyle(layout: Layout, point: string) {
  * @param el
  * @param e 
 */
-export function handleZoom(e: MouseEvent,layout: Layout,el: HTMLElement,mark:string,container:Layout) {
+export function handleZoom(e: MouseEvent, layout: Layout, el: HTMLElement, mark: string, container: Layout) {
     e.stopPropagation()
     e.preventDefault()
     let startX = e.clientX;
     let startY = e.clientY;
-    let pos = {...layout};
-    let {height,width,top,left} = pos;
+    let pos = { ...layout };
+    let { height, width, top, left } = pos;
     let move = (moveEvent: MouseEvent) => {
         moveEvent.stopPropagation()
         moveEvent.preventDefault()
@@ -160,7 +160,7 @@ export function handleZoom(e: MouseEvent,layout: Layout,el: HTMLElement,mark:str
         //         disX = disY * scale * (hasE ? 1 : -1);
         //     }
         // }
-        
+
         let newHeight = +height + (hasN ? -disY : hasS ? disY : 0);
         let newWidth = +width + (hasW ? -disX : hasE ? disX : 0);
         /**
@@ -173,7 +173,7 @@ export function handleZoom(e: MouseEvent,layout: Layout,el: HTMLElement,mark:str
         requestAnimationFrame(() => {
             store.commit('setLayout', pos)
         })
-        
+
     };
     let up = () => {
         document.removeEventListener("mousemove", move);
@@ -182,8 +182,42 @@ export function handleZoom(e: MouseEvent,layout: Layout,el: HTMLElement,mark:str
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", up)
 }
-    
 
+export const handleMove = (e: MouseEvent, layout: Layout, container: Layout) => {
+    e.stopPropagation();
+    e.preventDefault();
+    let pos = { ...layout }
+    let startY = e.pageY;
+    let startX = e.pageX;
+    let startTop = pos["top"];
+    let startLeft = pos["left"];
+    let move = (moveEvent: any) => {
+        moveEvent.stopPropagation(); //阻止冒泡影响父组件
+        let currX = moveEvent.pageX;
+        let currY = moveEvent.pageY;
+        let top = currY - startY + startTop;
+        let left = currX - startX + startLeft;
+        if (container) {
+            if (top < 0 || top + pos.height > container.height - 10) {
+                top = top < 0 ? 0 : container.height - pos.height;
+            }
+            if (left < 0 || left + pos.width > container.width - 10) {
+                left = left < 0 ? 0 : container.width - pos.width - 4;
+            }
+        }
+        pos.top = top;
+        pos.left = left;
+        requestAnimationFrame(() => {
+            store.commit('setLayout', pos)
+        })
+    }
+    let up = () => {
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
+    };
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+};
 export default function useShape() {
     return {
         getPointStyle,

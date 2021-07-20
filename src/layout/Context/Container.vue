@@ -1,8 +1,16 @@
 <script lang="tsx">
-import { computed, defineComponent, PropType, ref, resolveComponent } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  PropType,
+  ref,
+  resolveComponent,
+} from "vue";
 import getStyle from "@/utils/style";
 import Shape from "./Shape.vue";
 import { store } from "@/hooks/useComponents";
+import { handleMove } from "@/hooks/useShape";
 export default defineComponent({
   props: {
     defaultStyle: {
@@ -23,10 +31,12 @@ export default defineComponent({
       type: Object as PropType<BaseComponent>,
     },
   },
-  emits:['click'],
+  emits: ["click"],
   render() {
     const Component = resolveComponent(this.element.type) as any;
-    const componentRef = ref({})
+    const componentRef = ref({});
+    const active = store.getters.isActiveComponent(this.element);
+    const container = inject<Layout>("container");
     return (
       <div
         class="container"
@@ -35,13 +45,16 @@ export default defineComponent({
           e.stopPropagation();
           store.commit("setCurrentComponent", this.element);
         }}
+        onMousedown={(e) => {
+          handleMove(e, this.element.layout, container!);
+        }}
       >
         <Shape
           layout={this.element.layout}
-          active={store.getters.isActiveComponent(this.element)}
+          active={active}
           component={componentRef}
         />
-        <Component vModel={this.element.modelValue} ref={componentRef}/>
+        <Component vModel={this.element.modelValue} ref={componentRef} />
       </div>
     );
   },
@@ -49,7 +62,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .container {
-  margin-top:20px;
+  margin-top: 20px;
   position: relative;
   resize: both;
 }
