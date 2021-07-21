@@ -9,7 +9,7 @@
     :class="active ? 'active' : ''"
     v-for="(point, index) in pointList"
     :key="index"
-    @mousedown="handleZoom($event, layout, el, point,container)"
+    @mousedown="handleZoom($event,layout, el, point,container)"
     :style="getPointStyle(layout, point)"
   ></div>
 </template>
@@ -26,6 +26,15 @@ export default defineComponent({
     layout: {
       type: Object as PropType<Layout>,
       requeired: true,
+      default:()=>{
+        return {
+            width: 100,
+            height: 100,
+            top: 10,
+            left: 10,
+            rotate:0
+        }
+      }
     },
     active: {
       type: Boolean,
@@ -41,7 +50,7 @@ export default defineComponent({
       return props.component.value.$el;
     });
 
-    const container = inject<Layout>("container");
+    const container = inject<Layout>("container")!;
     return {
       pointList,
       getPointStyle,

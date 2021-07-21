@@ -7,9 +7,9 @@ export const componentList: Array<BaseComponent> = [
         layout: {
             width: 100,
             height: 100,
-            top: 10,
+            top: 30,
             left: 10,
-            rotate:0
+            rotate: 0
         },
         label: '按钮',
         text: '按钮文字'
@@ -23,7 +23,7 @@ export const componentList: Array<BaseComponent> = [
         layout: {
             width: 100,
             height: 100,
-            top: 10,
+            top: 30,
             left: 10
         },
         label: '开关',
@@ -40,7 +40,7 @@ export const componentList: Array<BaseComponent> = [
         layout: {
             width: 100,
             height: 100,
-            top: 10,
+            top: 30,
             left: 10,
             rotate: 0
         },
