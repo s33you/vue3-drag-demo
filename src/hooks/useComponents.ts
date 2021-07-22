@@ -1,5 +1,5 @@
-import { reactive, readonly } from "vue"
-import {cloneDeep} from 'lodash'
+import { reactive } from "vue"
+import { cloneDeep } from 'lodash'
 export const componentList: Array<BaseComponent> = [
     {
         type: 'el-button',
@@ -55,6 +55,7 @@ export const componentList: Array<BaseComponent> = [
 type State = {
     components: Array<BaseComponent>,
     currentComponent: BaseComponent | null
+    context: { width: number, height: number }
 }
 type MutationType = keyof (typeof mutations)
 type GettersKeys = keyof (typeof getters)
@@ -105,17 +106,21 @@ const mutations = {
     },
     setLayout({ currentComponent }: State, { top, left, width, height, rotate }: Layout) {
         if (currentComponent) {
-            if (top) currentComponent.layout.top = top
-            if (left) currentComponent.layout.left = left
-            if (width) currentComponent.layout.width = width
-            if (height) currentComponent.layout.height = height
-            if (rotate) currentComponent.layout.rotate = rotate
+            top && (currentComponent.layout.top = top)
+            left && (currentComponent.layout.left = left)
+            width && (currentComponent.layout.width = width)
+            height && (currentComponent.layout.height = height)
+            rotate && (currentComponent.layout.rotate = rotate)
         }
     },
 }
 const state: State = {
     components: [],
-    currentComponent: null
+    currentComponent: null,
+    context: {
+        width: 375,// 屏幕宽度,
+        height: 720
+    }
 }
 const getters = {
     isActiveComponent(state: State) {

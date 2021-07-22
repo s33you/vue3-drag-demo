@@ -9,6 +9,7 @@ import {
 } from "vue";
 import { store, componentList } from "@/hooks/useComponents";
 import Container from "./Container.vue";
+import getStyle from "@/utils/style";
 export default defineComponent({
   components: {},
   setup() {
@@ -22,28 +23,26 @@ export default defineComponent({
         store.commit("addComponent", componentList[Number(index)]);
       }
     };
-    const size = reactive({
-      top: 0,
-      left: 0,
-      width: 900,
-      height: 800,
-    });
+    const context = store.state.context
     //拖拽结束事件
     const handleDragOver = (e: DragEvent) => {
       e.preventDefault();
       e.dataTransfer!.dropEffect = "move";
     };
     const components = store.state.components;
-    provide("container", size);
+    provide("container", context);
     return { handleDragOver, handleDrop, components };
   },
   render() {
     return (
-      <div
-        class="context"
+      <div class="context">
+      <div class="size-picker"></div>
+        <div
+        class="canvas"
         onDrop={this.handleDrop}
         onDragover={this.handleDragOver}
         onClick={() => store.commit("setCurrentComponent", null)}
+        style={getStyle(store.state.context)}
       >
         {this.components.map((component) => {
           return (
@@ -55,6 +54,7 @@ export default defineComponent({
           );
         })}
       </div>
+      </div>
     );
   },
 });
@@ -65,6 +65,13 @@ export default defineComponent({
   position: relative;
   flex-grow: 1;
   background: rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+  overflow: auto;
+}
+.canvas{
+  position: relative;
+  margin:20px auto;
+  background-color: #fff;
+  width: 80%;
+  height: 80%;
 }
 </style>

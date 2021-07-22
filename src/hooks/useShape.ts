@@ -1,3 +1,4 @@
+import { throttle } from "lodash";
 import { inject, reactive } from "vue";
 import { store } from "./useComponents";
 
@@ -166,13 +167,11 @@ export function handleZoom(e: MouseEvent, layout: Layout, el: HTMLElement, mark:
         /**
          * 对值做出限定，从而限定布局
          */
-        pos["height"] = limitInArea(10, container!.height - 4, newHeight)
-        pos["width"] = limitInArea(10, container!.width - 4, newWidth)
-        pos["left"] = limitInArea(0, container!.width - pos['width'] + 2, left + (hasW ? disX : 0))
-        pos["top"] = limitInArea(0, container!.height - pos['height'] - 2, top + (hasN ? disY : 0))
-        requestAnimationFrame(() => {
-            store.commit('setLayout', pos)
-        })
+        pos["height"] = limitInArea(0, container!.height, newHeight)
+        pos["width"] = limitInArea(0, container!.width, newWidth)
+        pos["left"] = limitInArea(0, container!.width - pos['width'], left + (hasW ? disX : 0))
+        pos["top"] = limitInArea(0, container!.height - pos['height'], top + (hasN ? disY : 0))
+        store.commit('setLayout', pos)
 
     };
     let up = () => {
@@ -191,26 +190,24 @@ export const handleMove = (e: MouseEvent, layout: Layout, container: Layout) => 
     let startX = e.pageX;
     let startTop = pos["top"];
     let startLeft = pos["left"];
-    let move = (moveEvent: any) => {
+    let move = throttle((moveEvent: any) => {
         moveEvent.stopPropagation(); //阻止冒泡影响父组件
         let currX = moveEvent.pageX;
         let currY = moveEvent.pageY;
         let top = currY - startY + startTop;
         let left = currX - startX + startLeft;
         if (container) {
-            if (top < 0 || top + pos.height > container.height - 10) {
+            if (top < 0 || top + pos.height > container.height) {
                 top = top < 0 ? 0 : container.height - pos.height;
             }
-            if (left < 0 || left + pos.width > container.width - 10) {
-                left = left < 0 ? 0 : container.width - pos.width - 4;
+            if (left < 0 || left + pos.width > container.width) {
+                left = left < 0 ? 0 : container.width - pos.width;
             }
         }
         pos.top = top;
         pos.left = left;
-        requestAnimationFrame(() => {
-            store.commit('setLayout', pos)
-        })
-    }
+        store.commit('setLayout', pos)
+    },12)
     let up = () => {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
