@@ -4,6 +4,7 @@ import {
   defineComponent,
   inject,
   PropType,
+  provide,
   ref,
   resolveComponent,
 } from "vue";
@@ -11,7 +12,8 @@ import getStyle from "@/utils/style";
 import Shape from "./Shape.vue";
 import { store } from "@/hooks/useComponents";
 import { handleMove } from "@/hooks/useShape";
-export default defineComponent({
+import { chdir } from "process";
+const Container = defineComponent({
   props: {
     defaultStyle: {
       type: Object as PropType<Style>,
@@ -32,6 +34,9 @@ export default defineComponent({
     },
   },
   emits: ["click"],
+  setup(props) {
+    // provide("container", props.element.layout);
+  },
   render() {
     const Component = resolveComponent(this.element.type) as any;
     const componentRef = ref({});
@@ -55,10 +60,20 @@ export default defineComponent({
           component={componentRef}
         />
         <Component vModel={this.element.modelValue} ref={componentRef} />
+        {this.element.children?.map((child) => {
+          return (
+            <Container
+              layout={child.layout}
+              element={child}
+              defaultStyle={child.style}
+            />
+          );
+        })}
       </div>
     );
   },
 });
+export default Container;
 </script>
 <style lang="scss" scoped>
 .container {

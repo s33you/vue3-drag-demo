@@ -36,28 +36,38 @@
 3. 提供丰富的可配置项，是否可编辑，可拖拽等等
 
 **数据设计**  
-```javascript
-props:{
-    options:{
-        direction:'all'|'vertical'|'horizon' //可拖动方向，默认all
-        editable:false| true //默认true
-        dragable:false| true //默认true
-    }
-    element:{} // 元素信息本身
-    layout:{} //布局
-    style:{} //样式
-    active:false|true,
-    modelValue:string|number // 绑定值
-    text:"" 文字
-    props:{
-
-    }//额外的属性
+```typescript
+type customComponent = 'c-button' | 'c-text' | 'el-button' | 'el-select' |'el-switch'
+type Style = {
+    [key in keyof CSSStyleDeclaration]?: any
 }
-provide{
-    'container':layout
+//元素布局信息
+type Layout = {
+    width: number,
+    height: number,
+    top: number,
+    left: number,
+    rotate?: number
 }
-//用于嵌套的情况下传入父级容器数据 container 定位
-inject:[
-    'container'
-]
+interface BaseComponent<P=any>{
+    layout:Layout
+    style:Style
+    label:string,
+    type:customComponent //根据类型去渲染
+    modelValue?:number|string|boolean
+    text?:string
+    props?:P //额外的props
+    icon?:string
+}
+interface Operation<S>{
+    (state:S,payload?:any): void;
+}
+interface MutationOpiton<S>{
+        [propName: string]: Operation<S>
+}
+interface Options <S>{
+    state: S
+    mutations:MutationOpiton<S>
+    getters?: MutationOpiton<S>
+}
 ```

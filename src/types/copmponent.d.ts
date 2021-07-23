@@ -18,6 +18,8 @@ interface BaseComponent<P=any>{
     modelValue?:number|string|boolean
     text?:string
     props?:P
+    icon?:string,
+    children?:BaseComponent[]
 }
 interface Operation<S>{
     (state:S,payload?:any): void;

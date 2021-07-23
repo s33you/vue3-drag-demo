@@ -1,6 +1,5 @@
 <template>
     <div class="text-area">
-        <input class="input"  @input="$emit('update:modelValue', $event.target.value)" :value="modelValue"/>
         <span>{{modelValue}}</span>
     </div>
 </template>

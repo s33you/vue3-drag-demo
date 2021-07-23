@@ -51,6 +51,7 @@ export default defineComponent({
     });
 
     const container = inject<Layout>("container")!;
+
     return {
       pointList,
       getPointStyle,

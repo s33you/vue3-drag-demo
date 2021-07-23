@@ -12,6 +12,7 @@ export const componentList: Array<BaseComponent> = [
             rotate: 0
         },
         label: '按钮',
+        icon:'thumb',
         text: '按钮文字'
     },
     {
@@ -26,6 +27,7 @@ export const componentList: Array<BaseComponent> = [
             top: 30,
             left: 10
         },
+        icon:'switch-button',
         label: '开关',
         text: '按钮文字',
         modelValue: true,
@@ -45,11 +47,26 @@ export const componentList: Array<BaseComponent> = [
             rotate: 0
         },
         label: '文本',
+        icon:'document',
         modelValue: '文本文字',
         props: {
             activeColor: "#13ce66",
             inactiveColor: "#ff4949"
-        }
+        },
+        // children: [{
+        //     type: 'el-button',
+        //     style: {},
+        //     layout: {
+        //         width: 100,
+        //         height: 100,
+        //         top: 30,
+        //         left: 10,
+        //         rotate: 0
+        //     },
+        //     label: '按钮',
+        //     icon: 'thumb',
+        //     text: '按钮文字'
+        // }]
     }
 ]
 type State = {

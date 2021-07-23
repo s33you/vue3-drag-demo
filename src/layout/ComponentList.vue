@@ -9,6 +9,7 @@
       class="card"
       shadow="hover"
     >
+     <i :class="'el-icon-'+ component.icon"></i>
       <div>{{ component.label }}</div>
     </el-card>
   </div>
@@ -31,18 +32,17 @@ export default defineComponent({
 
 <style  lang="scss" scoped>
 .component-list {
+  padding-top:20px;
   width: 256px;
   height: 100%;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.1);
   display: flex;
   flex-shrink: 0;
 }
 .card {
   width: calc(50% - 20px);
   margin: 5px;
-  height: 40px;
   max-height: 60px;
-  line-height: 24px;
   font-size: 14px;
   text-align: center;
   letter-spacing: 12px;
