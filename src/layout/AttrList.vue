@@ -1,10 +1,18 @@
 <template>
-  <div class="attr-list"></div>
+  <div class="attr-list">
+      {{
+        element
+      }}
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent} from "vue";
+import { store } from "@/hooks/useComponents";
+import { computed, defineComponent, reactive} from "vue";
 export default defineComponent({
-  setup() {},
+  setup() {
+    const element = computed(() => store.state.currentComponent)
+    return {element}
+  },
 });
 </script>
 

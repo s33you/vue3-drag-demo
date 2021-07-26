@@ -99,8 +99,8 @@ export function getPointStyle(layout: Layout, point: string) {
         }
     }
     const style = {
-        marginLeft: hasR || hasL ? "-4px" : "-4px",
-        marginTop: "-4px",
+        marginLeft: hasR || hasL ? "-3px" : "-3px",
+        marginTop: "-3px",
         left: `${newLeft}px`,
         top: `${newTop}px`,
         cursor: `${point}-resize`,

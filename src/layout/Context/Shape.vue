@@ -73,7 +73,7 @@ export default defineComponent({
   display: none;
 }
 .active {
-  background: rgba(255, 255, 255, 0.63);
+  background:#fff;
   border: 1px solid #59c7f9;
   display: inherit;
 }

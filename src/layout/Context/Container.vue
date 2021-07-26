@@ -3,6 +3,7 @@ import {
   computed,
   defineComponent,
   inject,
+  mergeProps,
   PropType,
   provide,
   ref,
@@ -44,7 +45,7 @@ const Container = defineComponent({
     const container = inject<Layout>("container");
     return (
       <div
-        class="container"
+        class={!active?"container":"container active"}
         style={getStyle(this.element.layout)}
         onClick={(e) => {
           e.stopPropagation();
@@ -79,5 +80,8 @@ export default Container;
 .container {
   position: absolute;
   resize: both;
+}
+.active{
+     outline: 1px solid #6bbefd !important;
 }
 </style>
