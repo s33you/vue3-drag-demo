@@ -113,7 +113,7 @@ export function getPointStyle(layout: Layout, point: string) {
  * @param el
  * @param e 
 */
-export function handleZoom(e: MouseEvent, layout: Layout, el: HTMLElement, mark: string, container: Layout) {
+export function handleZoom(e: MouseEvent, layout: Layout, mark: string, container: Layout) {
     e.stopPropagation()
     e.preventDefault()
     let startX = e.clientX;

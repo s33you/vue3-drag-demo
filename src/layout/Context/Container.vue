@@ -2,6 +2,7 @@
 import {
   computed,
   defineComponent,
+  h,
   inject,
   mergeProps,
   PropType,
@@ -39,10 +40,23 @@ const Container = defineComponent({
     // provide("container", props.element.layout);
   },
   render() {
-    const Component = resolveComponent(this.element.type) as any;
     const componentRef = ref({});
     const active = store.getters.isActiveComponent(this.element);
     const container = inject<Layout>("container");
+    const Component = ()=>{
+      const props = {
+        ref:componentRef,
+        ...this.element.props,
+        style:getStyle(this.element.style)
+      }
+      if(this.element.modelValue !==undefined){
+        Object.assign(props,{
+          modelValue: this.element.modelValue,    
+          'onUpdate:modelValue': (value: any) => this.element.modelValue = value
+        })
+      }
+      return h(resolveComponent(this.element.type),props)
+    }
     return (
       <div
         class={!active?"container":"container active"}
@@ -60,7 +74,7 @@ const Container = defineComponent({
           active={active}
           component={componentRef}
         />
-        <Component vModel={this.element.modelValue} ref={componentRef} />
+        <Component />
         {this.element.children?.map((child) => {
           return (
             <Container

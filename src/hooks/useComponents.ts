@@ -13,7 +13,9 @@ export const componentList: Array<BaseComponent> = [
         },
         label: '按钮',
         icon:'thumb',
-        text: '按钮文字'
+        props:{
+            text:'按钮文字'
+        }
     },
     {
         type: 'el-switch',
@@ -29,8 +31,11 @@ export const componentList: Array<BaseComponent> = [
         },
         icon:'switch-button',
         label: '开关',
-        text: '按钮文字',
         modelValue: true,
+        props: {
+            activeColor: "#13ce66",
+            inactiveColor: "#ff4949"
+        },
 
     },
     {
@@ -48,11 +53,10 @@ export const componentList: Array<BaseComponent> = [
         },
         label: '文本',
         icon:'document',
-        modelValue: '文本文字',
         props: {
-            activeColor: "#13ce66",
-            inactiveColor: "#ff4949"
-        },
+            text: '文本文字'
+        }
+      
         // children: [{
         //     type: 'el-button',
         //     style: {},

@@ -9,7 +9,7 @@
     :class="active ? 'active' : ''"
     v-for="(point, index) in pointList"
     :key="index"
-    @mousedown="handleZoom($event,layout, el, point,container)"
+    @mousedown="handleZoom($event,layout, point,container)"
     :style="getPointStyle(layout, point)"
   ></div>
 </template>

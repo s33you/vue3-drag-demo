@@ -1,22 +1,28 @@
-<template>
-  <div class="attr-list">
-      {{
-        element
-      }}
-  </div>
-</template>
-<script lang="ts">
+<script lang="tsx">
 import { store } from "@/hooks/useComponents";
-import { computed, defineComponent, reactive} from "vue";
+import { computed, defineComponent, reactive } from "vue";
+import { attrsRender } from "@/hooks/useAttrList";
 export default defineComponent({
   setup() {
-    const element = computed(() => store.state.currentComponent)
-    return {element}
+    const element = computed(() => store.state.currentComponent);
+    return { element };
+  },
+  render() {
+    if (this.element) {
+      return (
+        <div class="attr-list">
+          {Object.keys(this.element!.style).map((key) => {
+            return attrsRender(this.element!.style, key);
+          })}
+        </div>
+      );
+    }
+    return "请先选择一个组件";
   },
 });
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 .attr-list {
   padding-top: 20px;
   width: 256px;

@@ -16,7 +16,6 @@ interface BaseComponent<P=any>{
     label:string,
     type:customComponent
     modelValue?:number|string|boolean
-    text?:string
     props?:P
     icon?:string,
     children?:BaseComponent[]
