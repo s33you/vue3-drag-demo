@@ -5,27 +5,46 @@ import { attrsRender } from "@/hooks/useAttrList";
 export default defineComponent({
   setup() {
     const element = computed(() => store.state.currentComponent);
-    return { element };
+    const activeNames = reactive([]);
+    return { element, activeNames };
   },
   render() {
     if (this.element) {
       return (
         <div class="attr-list">
-          {Object.keys(this.element!.style).map((key) => {
-            return attrsRender(this.element!.style, key);
-          })}
+          <el-collapse v-model={this.activeNames}>
+            <el-collapse-item title="基本属性" name="layout">
+              <el-form>
+                {Object.keys(this.element!.layout).map((key) => {
+                  return attrsRender(this.element!.layout, key);
+                })}
+              </el-form>
+            </el-collapse-item>
+            <el-collapse-item title="额外样式" name="style">
+              <el-form>
+                {Object.keys(this.element!.style).map((key) => {
+                  return attrsRender(this.element!.style, key);
+                })}
+              </el-form>
+            </el-collapse-item>
+          </el-collapse>
         </div>
       );
     }
-    return "请先选择一个组件";
+    return (
+      <div class="attr-list">
+        <i class="el-icon-warning" />
+        <span style="font-size:14px">请先选择一个组件</span>
+      </div>
+    );
   },
 });
 </script>
 
 <style lang="scss" scoped>
 .attr-list {
-  padding-top: 20px;
-  width: 256px;
+  padding: 16px;
+  min-width: 296px;
   height: 100%;
   flex-shrink: 0;
   box-shadow: 0px 12px 12px 0 rgba(0, 0, 0, 0.1);

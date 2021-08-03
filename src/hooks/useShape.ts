@@ -53,7 +53,6 @@ export function handleRotate(e: MouseEvent, layout: Layout, el: HTMLElement) {
         const rotateAfter = Math.atan2(curY - centerY, curX - centerX) / Math.PI * 180
         // 获取旋转的角度值
         pos.rotate = Number((startRotate + rotateAfter - rotateBefore).toFixed(2))
-        console.log(pos)
         // 修改当前组件样式
         store.commit('setLayout', pos)
     }
