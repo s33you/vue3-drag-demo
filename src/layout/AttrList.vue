@@ -44,7 +44,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .attr-list {
   padding: 16px;
-  min-width: 296px;
+  min-width: 320px;
   height: 100%;
   flex-shrink: 0;
   box-shadow: 0px 12px 12px 0 rgba(0, 0, 0, 0.1);

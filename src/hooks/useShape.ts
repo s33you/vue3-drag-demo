@@ -196,17 +196,17 @@ export const handleMove = (e: MouseEvent, layout: Layout, container: Layout) => 
         let top = currY - startY + startTop;
         let left = currX - startX + startLeft;
         if (container) {
-            if (top < 0 || top + pos.height > container.height) {
+            if (top < 0 || (top + pos.height > container.height)) {
                 top = top < 0 ? 0 : container.height - pos.height;
             }
-            if (left < 0 || left + pos.width > container.width) {
+            if (left < 0 || (left + pos.width > container.width)) {
                 left = left < 0 ? 0 : container.width - pos.width;
             }
         }
         pos.top = top;
         pos.left = left;
         store.commit('setLayout', pos)
-    },12)
+    }, 12)
     let up = () => {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);

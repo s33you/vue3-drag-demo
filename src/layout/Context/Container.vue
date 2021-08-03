@@ -1,12 +1,9 @@
 <script lang="tsx">
 import {
-  computed,
   defineComponent,
   h,
   inject,
-  mergeProps,
   PropType,
-  provide,
   ref,
   resolveComponent,
 } from "vue";
@@ -14,7 +11,6 @@ import getStyle from "@/utils/style";
 import Shape from "./Shape.vue";
 import { store } from "@/hooks/useComponents";
 import { handleMove } from "@/hooks/useShape";
-import { chdir } from "process";
 const Container = defineComponent({
   props: {
     defaultStyle: {

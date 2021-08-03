@@ -106,7 +106,7 @@ export class ComponentsStore {
     public commit(type: MutationType, payload?: any) {
         if (this.mutations[type]) {
             this.mutations[type](this.state, payload)
-            console.log('mutation:' + type)
+            // console.log('mutation:' + type)
         }
         else {
             throw new Error('this is no type of ' + type + 'in mutations')
@@ -125,11 +125,11 @@ const mutations = {
     },
     setLayout({ currentComponent }: State, { top, left, width, height, rotate }: Layout) {
         if (currentComponent) {
-            top && (currentComponent.layout.top = top)
-            left && (currentComponent.layout.left = left)
-            width && (currentComponent.layout.width = width)
-            height && (currentComponent.layout.height = height)
-            rotate && (currentComponent.layout.rotate = rotate)
+            top != undefined && (currentComponent.layout.top = top)
+            left != undefined && (currentComponent.layout.left = left)
+            width != undefined && (currentComponent.layout.width = width)
+            height != undefined && (currentComponent.layout.height = height)
+            rotate != undefined && (currentComponent.layout.rotate = rotate)
         }
     },
 }

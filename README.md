@@ -35,39 +35,9 @@
 2. 具有层级，能够嵌套渲染
 3. 提供丰富的可配置项，是否可编辑，可拖拽等等
 
-**数据设计**  
-```typescript
-type customComponent = 'c-button' | 'c-text' | 'el-button' | 'el-select' |'el-switch'
-type Style = {
-    [key in keyof CSSStyleDeclaration]?: any
-}
-//元素布局信息
-type Layout = {
-    width: number,
-    height: number,
-    top: number,
-    left: number,
-    rotate?: number
-}
-interface BaseComponent<P=any>{
-    layout:Layout
-    style:Style
-    label:string,
-    type:customComponent //根据类型去渲染
-    modelValue?:number|string|boolean
-    text?:string
-    props?:P //额外的props
-    icon?:string
-}
-interface Operation<S>{
-    (state:S,payload?:any): void;
-}
-interface MutationOpiton<S>{
-        [propName: string]: Operation<S>
-}
-interface Options <S>{
-    state: S
-    mutations:MutationOpiton<S>
-    getters?: MutationOpiton<S>
-}
-```
+**部分原理**  
+
+旋转: 通过MouseEvent 拿到 鼠标位置,通过HTMLElement.getBoundingClientRect 方法获取元素中心位置   
+利用Math.atan2 计算鼠标位置到中心位置与水平方向的夹角
+
+拖拽:
