@@ -23,6 +23,7 @@ const labelMap: any = {
   borderColor: "边框颜色",
   backgroundColor: "背景颜色",
   textAlign: "对齐方式",
+  backgroundImage:'背景图片'
 };
 const style2ElementKey = (key: string) => {
   const styleMap: {
@@ -46,6 +47,7 @@ const style2ElementKey = (key: string) => {
     ],
     "el-color-picker": ["color", "borderColor", "backgroundColor"],
     Select: ["textAlign"],
+    Upload:['backgroundImage']
   };
   const element = Object.entries(styleMap).find((element) => {
     if (element[1].includes(key)) {

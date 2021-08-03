@@ -1,5 +1,5 @@
 
-type customComponent = 'c-button' | 'c-text' | 'el-button' | 'el-select' |'el-switch'
+type customComponent = 'c-button' | 'c-text' | 'el-button' | 'el-select' |'el-switch'|'c-img'
 type Style = {
     [key in keyof CSSStyleDeclaration]?: any
 }

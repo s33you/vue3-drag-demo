@@ -38,6 +38,9 @@ export default defineComponent({
   box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.1);
   display: flex;
   flex-shrink: 0;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 .card {
   width: calc(50% - 20px);
@@ -46,6 +49,7 @@ export default defineComponent({
   font-size: 14px;
   text-align: center;
   letter-spacing: 12px;
+  flex-shrink: 0;
   cursor: grab;
   &:active {
     cursor: grabbing;

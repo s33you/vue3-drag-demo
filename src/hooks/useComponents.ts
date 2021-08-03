@@ -1,5 +1,6 @@
 import { reactive } from "vue"
 import { cloneDeep } from 'lodash'
+import defalutImg from '@/assets/logo.png'
 export const componentList: Array<BaseComponent> = [
     {
         type: 'el-button',
@@ -65,6 +66,29 @@ export const componentList: Array<BaseComponent> = [
             rotate: 0
         },
         label: '文本',
+        icon: 'document',
+        props: {
+            text: '文本文字'
+        }
+    },
+    {
+        type: 'c-img',
+        style: {
+            color: "red",
+            fontSize: 19,
+            lineHeight: 40,
+            borderRadius: 10,
+            textAlign: "center",
+            backgroundImage:`url('${defalutImg}')`
+        },
+        layout: {
+            width: 100,
+            height: 100,
+            top: 30,
+            left: 10,
+            rotate: 0
+        },
+        label: '图文',
         icon: 'document',
         props: {
             text: '文本文字'
