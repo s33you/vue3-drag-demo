@@ -12,6 +12,7 @@ import Shape from "./Shape.vue";
 import { store } from "@/hooks/useComponents";
 import { handleMove } from "@/hooks/useShape";
 const Container = defineComponent({
+  name: "Container",
   props: {
     defaultStyle: {
       type: Object as PropType<Style>,
@@ -39,29 +40,32 @@ const Container = defineComponent({
     const componentRef = ref({});
     const active = store.getters.isActiveComponent(this.element);
     const container = inject<Layout>("container");
-    const Component = ()=>{
+    const Component = () => {
       const props = {
-        ref:componentRef,
+        ref: componentRef,
         ...this.element.props,
-        style:getStyle(this.element.style)
+        style: getStyle(this.element.style),
+      };
+      if (this.element.modelValue !== undefined) {
+        Object.assign(props, {
+          modelValue: this.element.modelValue,
+          "onUpdate:modelValue": (value: any) =>
+            (this.element.modelValue = value),
+        });
       }
-      if(this.element.modelValue !==undefined){
-        Object.assign(props,{
-          modelValue: this.element.modelValue,    
-          'onUpdate:modelValue': (value: any) => this.element.modelValue = value
-        })
-      }
-      return h(resolveComponent(this.element.type),props)
-    }
+      return h(resolveComponent(this.element.type), props);
+    };
     return (
       <div
-        class={!active?"container":"container active"}
+        class={!active ? "container" : "container active"}
         style={getStyle(this.element.layout)}
         onClick={(e) => {
           e.stopPropagation();
           store.commit("setCurrentComponent", this.element);
         }}
         onMousedown={(e) => {
+          e.stopPropagation();
+          store.commit("setCurrentComponent", this.element);
           handleMove(e, this.element.layout, container!);
         }}
       >
@@ -91,7 +95,7 @@ export default Container;
   position: absolute;
   resize: both;
 }
-.active{
-     outline: 1px solid #6bbefd !important;
+.active {
+  outline: 1px solid #6bbefd !important;
 }
 </style>

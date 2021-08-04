@@ -22,6 +22,7 @@ import {
   handleZoom,
 } from "@/hooks/useShape";
 export default defineComponent({
+  name: "shape",
   props: {
     layout: {
       type: Object as PropType<Layout>,

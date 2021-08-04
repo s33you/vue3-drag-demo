@@ -1,12 +1,13 @@
 <template>
-  <el-upload :before-upload="handleUpload" action="" accept="image/*"
-    >上传</el-upload
+  <el-upload :before-upload="handleUpload" action="" accept="image/*">
+    <el-button size="mini" type="primary">上传图片</el-button></el-upload
   >
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
+  name: "Upload",
   props: {
     modelValue: {
       type: String,
@@ -21,7 +22,7 @@ export default defineComponent({
       reader.readAsDataURL(file);
       reader.onload = () => {
         console.log(reader.result);
-        this.$emit("update:modelValue", `url(${reader.result})`);
+        this.$emit("update:modelValue", reader.result);
       };
       return false;
     },
@@ -29,5 +30,4 @@ export default defineComponent({
 });
 </script>
 
-<style  lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

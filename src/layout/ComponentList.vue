@@ -16,9 +16,9 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { componentList } from "@/hooks/useComponents";
+import { componentList } from "@/hooks/useComponentList";
 export default defineComponent({
-
+  name: "ComponentList",
   setup() {
     const components = reactive(componentList);
     //拖拽事件

@@ -28,6 +28,7 @@ const optionsMap:any = {
   ],
 };
 export default defineComponent({
+  name:"Select",
   props: {
     modelValue: {
       type: String,

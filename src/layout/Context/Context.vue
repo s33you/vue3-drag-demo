@@ -7,10 +7,12 @@ import {
   reactive,
   resolveComponent,
 } from "vue";
-import { store, componentList } from "@/hooks/useComponents";
+import { store } from "@/hooks/useComponents";
 import Container from "./Container.vue";
+import { componentList } from "@/hooks/useComponentList";
 import getStyle from "@/utils/style";
 export default defineComponent({
+  name: "Context",
   components: {},
   setup() {
     //监听放置事件
@@ -35,7 +37,6 @@ export default defineComponent({
   },
   render() {
     return (
-      
       <div class="context">
         <div class="size-picker">
           <span>宽：</span>
@@ -45,7 +46,7 @@ export default defineComponent({
             controls-position="right"
             size="mini"
           ></el-input-number>
-            <span>高：</span>
+          <span>高：</span>
           <el-input-number
             class="input-number"
             v-model={this.context.height}
@@ -53,7 +54,7 @@ export default defineComponent({
             size="mini"
           ></el-input-number>
         </div>
-        
+
         <div
           class="canvas"
           onDrop={this.handleDrop}
@@ -92,11 +93,11 @@ export default defineComponent({
   width: 80%;
   height: 80%;
 }
-.size-picker{
+.size-picker {
   text-align: center;
   margin: 0 auto;
-  font-size:14px;
-  .input-number{
+  font-size: 14px;
+  .input-number {
     margin: 0 10px;
   }
 }
