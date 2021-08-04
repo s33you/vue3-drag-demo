@@ -1,13 +1,12 @@
 <template>
   <div class="text-area">
-    <img :src="img" class="img" v-if="img != ''" />
-    <span>{{ text }}</span>
+    <el-button>{{ text }}</el-button>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name:'c-img',
+  name: "c-button",
   props: {
     text: {
       type: String,
@@ -26,19 +25,5 @@ export default defineComponent({
 .text-area {
   width: 100%;
   height: 100%;
-  .input {
-    width: calc(100% - 4px);
-    padding: 0;
-  }
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  .img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index:-1;
-  }
 }
 </style>
