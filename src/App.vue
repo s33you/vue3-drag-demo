@@ -14,7 +14,7 @@ import AttrList from "@/layout/AttrList.vue";
 import ComponentList from "@/layout/ComponentList.vue";
 import Context from "@/layout/Context/Context.vue";
 import { defineComponent } from "vue";
-import Menu from "@/layout/Menu.vue";
+import Menu from "@/layout/MenuTop.vue";
 export default defineComponent({
   name: "App",
   components: {
