@@ -3,8 +3,8 @@ type Style = {
     [key in keyof CSSStyleDeclaration]?: any
 }
 type Layout = {
-    width: number,
-    height: number,
+    width?: number,
+    height?: number,
     top: number,
     left: number,
     rotate?: number

@@ -11,6 +11,7 @@ import { store } from "@/hooks/useComponents";
 import Container from "./Container.vue";
 import { componentList } from "@/components/custom";
 import getStyle from "@/utils/style";
+import ContextMenu from "./ContextMenu.vue";
 export default defineComponent({
   name: "Context",
   components: {},
@@ -59,8 +60,27 @@ export default defineComponent({
           class="canvas"
           onDrop={this.handleDrop}
           onDragover={this.handleDragOver}
-          onClick={() => store.commit("setCurrentComponent", null)}
+          onClick={() => {
+            store.commit("setCurrentComponent", null);
+            store.commit("hideContextMenu");
+          }}
           style={getStyle(store.state.context)}
+          onContextmenu={(e: any) => {
+            e.preventDefault();
+            e.stopPropagation();
+            let top = e.offsetY;
+            let left = e.offsetX;
+            let target = e.target;
+            while (!target.className.includes("canvas")) {
+              left += target.offsetLeft;
+              top += target.offsetTop;
+              target = target.parentNode;
+            }
+            store.commit("showContextMenu", {
+              top,
+              left,
+            });
+          }}
         >
           {this.components.map((component) => {
             return (
@@ -71,6 +91,7 @@ export default defineComponent({
               />
             );
           })}
+          <ContextMenu />
         </div>
       </div>
     );

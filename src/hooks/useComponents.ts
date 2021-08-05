@@ -1,11 +1,12 @@
 import { reactive } from "vue"
-import { cloneDeep } from 'lodash'
-import defalutImg from '@/assets/logo.png'
+import { cloneDeep, remove } from 'lodash'
 
 type State = {
     components: Array<BaseComponent>,
     currentComponent: BaseComponent | null
     context: { width: number, height: number }
+    menuLayout: { top: number, left: number, show: boolean }
+    cloneSource: BaseComponent | null
 }
 type MutationType = keyof (typeof mutations)
 type GettersKeys = keyof (typeof getters)
@@ -63,6 +64,31 @@ const mutations = {
             rotate != undefined && (currentComponent.layout.rotate = rotate)
         }
     },
+    showContextMenu(state: State, { top, left }: Layout) {
+        state.menuLayout.top = top
+        state.menuLayout.left = left
+        state.menuLayout.show = true
+    },
+    hideContextMenu(state: State) {
+        state.menuLayout.show = false
+    },
+    copy(state: State) {
+        state.cloneSource = cloneDeep(state.currentComponent)
+    },
+    remove(state: State) {
+        state.components.find((component, index) => {
+            if (component == state.currentComponent) {
+                state.components.splice(index, 1)
+            }
+        })
+    },
+    paste(state: State) {
+        if (state.cloneSource) {
+            state.cloneSource.layout.top = state.menuLayout.top
+            state.cloneSource.layout.left = state.menuLayout.left
+            store.commit('addComponent', state.cloneSource)
+        }
+    }
 }
 const state: State = {
     components: [],
@@ -70,7 +96,13 @@ const state: State = {
     context: {
         width: 375,// 屏幕宽度,
         height: 720
-    }
+    },
+    menuLayout: {
+        top: 0,
+        left: 0,
+        show: false
+    },
+    cloneSource: null
 }
 const getters = {
     isActiveComponent(state: State) {
