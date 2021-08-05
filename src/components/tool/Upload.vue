@@ -21,7 +21,6 @@ export default defineComponent({
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        console.log(reader.result);
         this.$emit("update:modelValue", reader.result);
       };
       return false;

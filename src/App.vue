@@ -1,6 +1,6 @@
 <template>
   <header>
-    <Menu />
+    <MenuTop/>
   </header>
   <main class="main">
     <ComponentList />
@@ -14,14 +14,14 @@ import AttrList from "@/layout/AttrList.vue";
 import ComponentList from "@/layout/ComponentList.vue";
 import Context from "@/layout/Context/Context.vue";
 import { defineComponent } from "vue";
-import Menu from "@/layout/MenuTop.vue";
+import MenuTop from "@/layout/MenuTop.vue";
 export default defineComponent({
   name: "App",
   components: {
     AttrList,
     ComponentList,
     Context,
-    Menu,
+    MenuTop,
   },
 });
 </script>

@@ -16,7 +16,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { componentList } from "@/hooks/useComponentList";
+import { componentList } from "@/components/custom";
 export default defineComponent({
   name: "ComponentList",
   setup() {

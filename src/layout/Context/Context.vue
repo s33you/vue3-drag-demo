@@ -9,7 +9,7 @@ import {
 } from "vue";
 import { store } from "@/hooks/useComponents";
 import Container from "./Container.vue";
-import { componentList } from "@/hooks/useComponentList";
+import { componentList } from "@/components/custom";
 import getStyle from "@/utils/style";
 export default defineComponent({
   name: "Context",
