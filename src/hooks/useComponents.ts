@@ -1,12 +1,14 @@
-import { reactive } from "vue"
+import { nextTick, reactive } from "vue"
 import { cloneDeep, remove } from 'lodash'
-
+import { ElMessage } from 'element-plus'
+import { swapIndex } from "@/utils/tools"
 type State = {
     components: Array<BaseComponent>,
     currentComponent: BaseComponent | null
     context: { width: number, height: number }
     menuLayout: { top: number, left: number, show: boolean }
     cloneSource: BaseComponent | null
+    currentIndex: number
 }
 type MutationType = keyof (typeof mutations)
 type GettersKeys = keyof (typeof getters)
@@ -38,7 +40,8 @@ export class ComponentsStore {
     public commit(type: MutationType, payload?: any) {
         if (this.mutations[type]) {
             this.mutations[type](this.state, payload)
-            // console.log('mutation:' + type)
+            console.log('mutation:' + type)
+            console.log(payload)
         }
         else {
             throw new Error('this is no type of ' + type + 'in mutations')
@@ -50,10 +53,14 @@ const mutations = {
     addComponent(state: State, component: BaseComponent) {
         //生产环境的DeepClone 还是选择 lodash
         state.components.push(cloneDeep(component))
-        this.setCurrentComponent(state, state.components[state.components.length - 1])
+        let index = state.components.length - 1
+        this.setCurrentComponent(state, { component: state.components[index], index })
     },
-    setCurrentComponent(state: State, component: BaseComponent) {
+    setCurrentComponent(state: State, { component, index }: { component: BaseComponent, index: number | null }) {
         state.currentComponent = component
+        if (index != null) {
+            state.currentIndex = index
+        }
     },
     setLayout({ currentComponent }: State, { top, left, width, height, rotate }: Layout) {
         if (currentComponent) {
@@ -88,6 +95,35 @@ const mutations = {
             state.cloneSource.layout.left = state.menuLayout.left
             store.commit('addComponent', state.cloneSource)
         }
+    },
+    moveToTop(state: State) {
+        let length = state.components.length
+        if (state.currentIndex < length - 1) {
+            nextTick(() => {
+                swapIndex(state.components, state.currentIndex, length - 1)
+
+            })
+        }
+        else {
+            ElMessage({
+                message: 'can not move to top',
+                type: 'warning'
+            })
+        }
+    },
+    moveToBottom() {
+        if (state.currentIndex > 0) {
+            nextTick(() => {
+                swapIndex(state.components, state.currentIndex, 0)
+
+            })
+        }
+        else {
+            ElMessage({
+                message: 'can not move to bottom',
+                type: 'warning'
+            })
+        }
     }
 }
 const state: State = {
@@ -102,6 +138,7 @@ const state: State = {
         left: 0,
         show: false
     },
+    currentIndex: 0,
     cloneSource: null
 }
 const getters = {

@@ -17,6 +17,10 @@ const Container = defineComponent({
     defaultStyle: {
       type: Object as PropType<Style>,
     },
+    index:{
+      type:Number,
+      required:true
+    },
     layout: {
       required: true,
       type: Object as PropType<Layout>,
@@ -61,11 +65,11 @@ const Container = defineComponent({
         style={getStyle(this.element.layout)}
         onClick={(e) => {
           e.stopPropagation();
-          store.commit("setCurrentComponent", this.element);
+          store.commit("setCurrentComponent", {component:this.element,index:this.index});
         }}
         onMousedown={(e) => {
           e.stopPropagation();
-          store.commit("setCurrentComponent", this.element);
+          store.commit("setCurrentComponent", {component:this.element,index:this.index});
           handleMove(e, this.element.layout, container!);
         }}
       >
@@ -75,9 +79,10 @@ const Container = defineComponent({
           component={componentRef}
         />
         <Component />
-        {this.element.children?.map((child) => {
+        {this.element.children?.map((child,index) => {
           return (
             <Container
+              index={index}
               layout={child.layout}
               element={child}
               defaultStyle={child.style}

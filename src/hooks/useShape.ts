@@ -71,7 +71,7 @@ export function handleRotate(e: MouseEvent, layout: Layout, el: HTMLElement) {
  * @param point 点的字符串
  */
 
-export function getPointStyle(layout: Layout, point: string) {
+export function getPointStyle(layout:Layout, point: string) {
     const { width, height } = layout;
     const hasT = /n/.test(point);
     const hasB = /s/.test(point);

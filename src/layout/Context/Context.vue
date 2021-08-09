@@ -1,5 +1,6 @@
 <script lang="tsx">
 import {
+  computed,
   defineComponent,
   h,
   PropType,
@@ -32,9 +33,25 @@ export default defineComponent({
       e.preventDefault();
       e.dataTransfer!.dropEffect = "move";
     };
-    const components = store.state.components;
+    const ContextMenu = (e: any) => {
+      e.preventDefault();
+      e.stopPropagation();
+      let top = e.offsetY;
+      let left = e.offsetX;
+      let target = e.target;
+      while (!target.className.includes("canvas")) {
+        left += target.offsetLeft;
+        top += target.offsetTop;
+        target = target.parentNode;
+      }
+      store.commit("showContextMenu", {
+        top,
+        left,
+      });
+    };
+    const components = computed(() => store.state.components);
     provide("container", context);
-    return { handleDragOver, handleDrop, components, context };
+    return { handleDragOver, handleDrop, components, context, ContextMenu };
   },
   render() {
     return (
@@ -61,30 +78,19 @@ export default defineComponent({
           onDrop={this.handleDrop}
           onDragover={this.handleDragOver}
           onClick={() => {
-            store.commit("setCurrentComponent", null);
+            store.commit("setCurrentComponent", {
+              component: null,
+              index: null,
+            });
             store.commit("hideContextMenu");
           }}
           style={getStyle(store.state.context)}
-          onContextmenu={(e: any) => {
-            e.preventDefault();
-            e.stopPropagation();
-            let top = e.offsetY;
-            let left = e.offsetX;
-            let target = e.target;
-            while (!target.className.includes("canvas")) {
-              left += target.offsetLeft;
-              top += target.offsetTop;
-              target = target.parentNode;
-            }
-            store.commit("showContextMenu", {
-              top,
-              left,
-            });
-          }}
+          onContextmenu={this.ContextMenu}
         >
-          {this.components.map((component) => {
+          {this.components.map((component, index) => {
             return (
               <Container
+                index={index}
                 defaultStyle={component.style}
                 layout={component.layout}
                 element={component}

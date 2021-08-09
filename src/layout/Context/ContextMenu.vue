@@ -29,24 +29,35 @@ export default defineComponent({
       store.state.currentComponent == null ? false : true
     );
     const menuLayout = computed(() => store.state.menuLayout);
-    const copy = () => {
-      store.commit("copy");
-    };
-    const remove = () => {
-      store.commit("remove");
-    };
+
     const paste = (e: MouseEvent) => {
       store.commit("paste");
     };
     const operations = [
       {
         label: "复制",
-        handle: copy,
+        handle: () => {
+          store.commit("copy");
+        },
       },
       {
         label: "删除",
-        handle: remove,
+        handle: () => {
+          store.commit("remove");
+        },
       },
+      {
+        label:"置顶",
+        handle:()=>{
+          store.commit('moveToTop')
+        }
+      },
+      {
+        label:"置底",
+        handle:()=>{
+          store.commit('moveToBottom')
+        }
+      }
     ];
     return { hasCurrentComponent, menuLayout, operations, paste };
   },
