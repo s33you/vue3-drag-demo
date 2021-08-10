@@ -47,17 +47,29 @@ export default defineComponent({
         },
       },
       {
-        label:"置顶",
-        handle:()=>{
-          store.commit('moveToTop')
-        }
+        label: "置顶",
+        handle: () => {
+          store.commit("moveToTop");
+        },
       },
       {
-        label:"置底",
-        handle:()=>{
-          store.commit('moveToBottom')
-        }
-      }
+        label: "置底",
+        handle: () => {
+          store.commit("moveToBottom");
+        },
+      },
+      {
+        label: "上移",
+        handle: () => {
+          store.commit("toTop");
+        },
+      },
+      {
+        label: "下移",
+        handle: () => {
+          store.commit("toBottom");
+        },
+      },
     ];
     return { hasCurrentComponent, menuLayout, operations, paste };
   },

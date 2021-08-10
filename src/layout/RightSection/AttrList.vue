@@ -58,21 +58,5 @@ export default defineComponent({
   flex-shrink: 0;
   box-shadow: 0px 12px 12px 0 rgba(0, 0, 0, 0.1);
 }
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background-color: #f5f5f5;
-}
 
-/*定义滚动条轨道 内阴影+圆角*/
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-/*定义滑块 内阴影+圆角*/
-::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  width: 6px;
-  background: #b4bccc;
-}
 </style>

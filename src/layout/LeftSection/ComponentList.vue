@@ -23,7 +23,6 @@ export default defineComponent({
     const components = reactive(componentList);
     //拖拽事件
     const handleDrag = (e: any) => {
-      console.log('start')
       e.dataTransfer.setData("index", e.target.dataset.index);
     };
     return { components, handleDrag };

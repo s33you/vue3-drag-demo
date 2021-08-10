@@ -41,7 +41,7 @@ export class ComponentsStore {
         if (this.mutations[type]) {
             this.mutations[type](this.state, payload)
             console.log('mutation:' + type)
-            console.log(payload)
+            // console.log(payload)
         }
         else {
             throw new Error('this is no type of ' + type + 'in mutations')
@@ -99,28 +99,46 @@ const mutations = {
     moveToTop(state: State) {
         let length = state.components.length
         if (state.currentIndex < length - 1) {
-            nextTick(() => {
-                swapIndex(state.components, state.currentIndex, length - 1)
-
-            })
+            swapIndex(state.components, state.currentIndex, length - 1)
         }
         else {
             ElMessage({
-                message: 'can not move to top',
+                message: '到顶了',
                 type: 'warning'
             })
         }
     },
-    moveToBottom() {
+    moveToBottom(state: State) {
         if (state.currentIndex > 0) {
-            nextTick(() => {
-                swapIndex(state.components, state.currentIndex, 0)
-
-            })
+            swapIndex(state.components, state.currentIndex, 0)
         }
         else {
             ElMessage({
-                message: 'can not move to bottom',
+                message: '到底了',
+                type: 'warning'
+            })
+        }
+    },
+    toTop(state: State) {
+        let length = state.components.length
+        if (state.currentIndex < length - 1 && state.currentIndex + 1 < length) {
+            swapIndex(state.components, state.currentIndex, state.currentIndex + 1)
+        }
+        else {
+            ElMessage({
+                message: '到顶了',
+                type: 'warning'
+            })
+        }
+    },
+    toBottom(state: State) {
+        let length = state.components.length
+        if (state.currentIndex < length && state.currentIndex > 0) {
+            swapIndex(state.components, state.currentIndex, state.currentIndex - 1)
+        }
+        else {
+            ElMessage({
+                message: '到底了',
                 type: 'warning'
             })
         }

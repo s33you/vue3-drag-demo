@@ -1,32 +1,49 @@
 <template>
   <header>
-    <MenuTop/>
+    <MenuTop />
   </header>
   <main class="main">
-    <ComponentList />
+    <LeftSection />
     <Context />
-    <AttrList />
+    <RightSection />
   </main>
 </template>
 
 <script lang="ts">
-import AttrList from "@/layout/AttrList.vue";
-import ComponentList from "@/layout/ComponentList.vue";
 import Context from "@/layout/Context/Context.vue";
 import { defineComponent } from "vue";
 import MenuTop from "@/layout/MenuTop.vue";
+import RightSection from "@/layout/RightSection/index.vue";
+import LeftSection from "@/layout/LeftSection/index.vue";
 export default defineComponent({
   name: "App",
   components: {
-    AttrList,
-    ComponentList,
     Context,
     MenuTop,
+    LeftSection,
+    RightSection,
   },
 });
 </script>
 
 <style lang="scss">
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #f5f5f5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  width: 6px;
+  background: #b4bccc;
+}
 html,
 body {
   margin: 0;
@@ -37,7 +54,7 @@ body {
   width: 100%;
   height: 100%;
 }
-*{
+* {
   box-sizing: border-box;
 }
 .main {
