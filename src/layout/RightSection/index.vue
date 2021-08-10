@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" type="card"  class="tabs">
+  <el-tabs v-model="activeName"  class="tabs" stretch>
     <el-tab-pane label="属性" name="attr" >
       <AttrList />
     </el-tab-pane>
