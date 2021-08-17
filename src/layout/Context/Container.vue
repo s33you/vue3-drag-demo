@@ -42,6 +42,7 @@ const Container = defineComponent({
   },
   render() {
     const componentRef = ref({});
+    this.element.ref = componentRef;
     const active = store.getters.isActiveComponent(this.element);
     const container = inject<Layout>("container");
     const Component = () => {

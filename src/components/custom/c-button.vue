@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "c-button",
   config: {
@@ -28,7 +28,9 @@ export default defineComponent({
     props: {
       text: "按钮文字",
     },
-  },
+    ref:ref({}),
+    animations:[]
+  } as BaseComponent,
   props: {
     text: {
       type: String,

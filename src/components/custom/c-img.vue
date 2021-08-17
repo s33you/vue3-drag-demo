@@ -5,10 +5,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "c-img",
-  config: {
+  config:{
     type: "c-img",
     style: {
       color: "red",
@@ -17,6 +17,7 @@ export default defineComponent({
       borderRadius: 10,
       textAlign: "center",
     },
+    animations:[],
     layout: {
       width: 100,
       height: 100,
@@ -24,13 +25,14 @@ export default defineComponent({
       left: 10,
       rotate: 0,
     },
+    ref:null,
     label: "图文",
     icon: "picture",
     props: {
       text: "文本文字",
       img: "",
     },
-  },
+  } as BaseComponent,
   props: {
     text: {
       type: String,

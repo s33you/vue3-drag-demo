@@ -5,6 +5,7 @@ import { swapIndex } from "@/utils/tools"
 type State = {
     components: Array<BaseComponent>,
     currentComponent: BaseComponent | null
+    currentComponentEl: HTMLElement | any,
     context: { width: number, height: number }
     menuLayout: { top: number, left: number, show: boolean }
     cloneSource: BaseComponent | null
@@ -157,7 +158,8 @@ const state: State = {
         show: false
     },
     currentIndex: 0,
-    cloneSource: null
+    cloneSource: null,
+    currentComponentEl:null
 }
 const getters = {
     isActiveComponent(state: State) {
