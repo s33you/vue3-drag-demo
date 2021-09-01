@@ -103,5 +103,7 @@ export default Container;
 }
 .active {
   outline: 1px solid #6bbefd !important;
+  will-change: transform;
+
 }
 </style>

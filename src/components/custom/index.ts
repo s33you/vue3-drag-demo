@@ -1,12 +1,13 @@
 import { App } from "vue";
 import cImg from '@custom/c-img.vue'
 import cButton from '@custom/c-button.vue'
+import cInput from '@custom/c-input.vue'
 import { cloneDeep } from "lodash";
 
 
 
 
-const componentPlugins = [cImg, cButton];
+const componentPlugins = [cImg, cButton,cInput];
 
 
 export const componentList: Array<BaseComponent> = [
