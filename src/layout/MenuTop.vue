@@ -18,5 +18,7 @@ export default defineComponent({
   height: $menu-height;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 2 px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
 }
 </style>

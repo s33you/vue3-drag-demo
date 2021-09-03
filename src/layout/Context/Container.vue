@@ -10,16 +10,15 @@ import {
 import getStyle from "@/utils/style";
 import Shape from "./Shape.vue";
 import { store } from "@/hooks/useComponents";
-import { handleMove } from "@/hooks/useShape";
 const Container = defineComponent({
   name: "Container",
   props: {
     defaultStyle: {
       type: Object as PropType<Style>,
     },
-    index:{
-      type:Number,
-      required:true
+    index: {
+      type: Number,
+      required: true,
     },
     layout: {
       required: true,
@@ -43,11 +42,10 @@ const Container = defineComponent({
   render() {
     const componentRef = ref({});
     this.element.ref = componentRef;
-    const active = store.getters.isActiveComponent(this.element);
-    const container = inject<Layout>("container");
-    const Component = () => {
-      const props = {
+    const Component = (props: any) => {
+      props = {
         ref: componentRef,
+        ...props,
         ...this.element.props,
         style: getStyle(this.element.style),
       };
@@ -62,25 +60,20 @@ const Container = defineComponent({
     };
     return (
       <div
-        class={!active ? "container" : "container active"}
+        class={
+          this.element.active === false
+            ? "container"
+            : "container active"
+        }
         style={getStyle(this.element.layout)}
-        onClick={(e) => {
-          e.stopPropagation();
-          store.commit("setCurrentComponent", {component:this.element,index:this.index});
-        }}
-        onMousedown={(e) => {
-          e.stopPropagation();
-          store.commit("setCurrentComponent", {component:this.element,index:this.index});
-          handleMove(e, this.element.layout, container!);
-        }}
       >
         <Shape
           layout={this.element.layout}
-          active={active}
+          active={ this.element.active}
           component={componentRef}
         />
-        <Component />
-        {this.element.children?.map((child,index) => {
+        <Component data-index={this.index} />
+        {this.element.children?.map((child, index) => {
           return (
             <Container
               index={index}
@@ -104,6 +97,5 @@ export default Container;
 .active {
   outline: 1px solid #6bbefd !important;
   will-change: transform;
-
 }
 </style>

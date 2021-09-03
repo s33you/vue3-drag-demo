@@ -9,6 +9,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "c-img",
   config:{
+    active:false,
     type: "c-img",
     style: {
       color: "red",

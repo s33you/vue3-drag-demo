@@ -8,6 +8,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "c-input",
   config: {
+    active:false,
     type: "c-input",
     style: {
       color: "red",

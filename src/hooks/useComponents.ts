@@ -1,7 +1,8 @@
-import { nextTick, reactive } from "vue"
-import { cloneDeep, remove } from 'lodash'
+import { nextTick, reactive, ref } from "vue"
+import { clone, cloneDeep, remove } from 'lodash'
 import { ElMessage } from 'element-plus'
 import { swapIndex } from "@/utils/tools"
+import { componentList } from "@/components/custom"
 type State = {
     components: Array<BaseComponent>,
     currentComponent: BaseComponent | null
@@ -55,13 +56,19 @@ const mutations = {
         //生产环境的DeepClone 还是选择 lodash
         state.components.push(cloneDeep(component))
         let index = state.components.length - 1
-        this.setCurrentComponent(state, { component: state.components[index], index })
+        this.setCurrentComponent(state, {  index })
     },
-    setCurrentComponent(state: State, { component, index }: { component: BaseComponent, index: number | null }) {
-        state.currentComponent = component
+    setCurrentComponent(state: State, {  index }: { index: number | null }) {
+        if (state.currentComponent != null) {
+            state.currentComponent.active = false
+        }
         if (index != null) {
             state.currentIndex = index
-        }
+            state.currentComponent = state.components[index]
+            state.currentComponent.active = true;
+            return 
+        }  
+        state.currentComponent = null
     },
     setLayout({ currentComponent }: State, { top, left, width, height, rotate }: Layout) {
         if (currentComponent) {
@@ -146,7 +153,33 @@ const mutations = {
     }
 }
 const state: State = {
-    components: [],
+    components: new Array(500).fill(0).map(()=>{
+        return cloneDeep({
+            active: false,
+            type: "c-button",
+            style: {
+                color: "red",
+                fontSize: 19,
+                lineHeight: 40,
+                borderRadius: 10,
+                textAlign: "center",
+            },
+            layout: {
+                width: 100,
+                height: 100,
+                top: 30,
+                left: 10,
+                rotate: 0,
+            },
+            label: "按钮",
+            icon: "thumb",
+            props: {
+                text: "按钮文字",
+            },
+            ref: ref({}),
+            animations: []
+        })
+    }),
     currentComponent: null,
     context: {
         width: 375,// 屏幕宽度,
@@ -159,12 +192,12 @@ const state: State = {
     },
     currentIndex: 0,
     cloneSource: null,
-    currentComponentEl:null
+    currentComponentEl: null
 }
 const getters = {
-    isActiveComponent(state: State) {
-        return (component: BaseComponent) => { return state.currentComponent === component }
-    }
+    // isActiveComponent(state: State) {
+    //     // return (index: number) => { return state.currentIndex === index }
+    // }
 }
 export const store = new ComponentsStore({
     state,

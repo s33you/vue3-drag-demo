@@ -9,7 +9,7 @@
         <li
           v-for="(item, index) in operations"
           :key="index"
-          @click="item.handle"
+          @click.stop="item.handle"
         >
           {{ item.label }}
         </li>
@@ -78,6 +78,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .context-menu {
+  will-change: transform;
   z-index: 99;
   position: absolute;
   width: 120px;

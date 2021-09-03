@@ -1,4 +1,5 @@
 <script lang="tsx">
+import { handleMove } from "@/hooks/useShape";
 import {
   computed,
   defineComponent,
@@ -77,12 +78,25 @@ export default defineComponent({
           class="canvas"
           onDrop={this.handleDrop}
           onDragover={this.handleDragOver}
-          onClick={() => {
+          onClick={(e: any) => {
+            if (e.target.dataset.index) {
+              store.commit("setCurrentComponent", {
+                index: e.target.dataset.index,
+              });
+              return;
+            }
             store.commit("setCurrentComponent", {
-              component: null,
               index: null,
             });
             store.commit("hideContextMenu");
+          }}
+          onMousedown={(e: any) => {
+            if (e.target.dataset.index) {
+              store.commit("setCurrentComponent", {
+                index: e.target.dataset.index,
+              });
+              handleMove(e, store.state.currentComponent!.layout, this.context);
+            }
           }}
           style={getStyle(store.state.context)}
           onContextmenu={this.ContextMenu}
@@ -114,6 +128,7 @@ export default defineComponent({
   overflow: auto;
 }
 .canvas {
+  will-change: transform;
   position: relative;
   margin: 20px auto;
   background-color: #fff;

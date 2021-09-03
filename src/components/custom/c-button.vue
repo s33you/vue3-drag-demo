@@ -8,6 +8,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "c-button",
   config: {
+    active:false,
     type: "c-button",
     style: {
       color: "red",

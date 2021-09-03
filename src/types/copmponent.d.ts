@@ -11,6 +11,7 @@ type Layout = {
     rotate?: number
 }
 interface BaseComponent<P = any> {
+    active: boolean,
     layout: Layout
     style: Style
     label: string,

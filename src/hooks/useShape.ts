@@ -71,7 +71,7 @@ export function handleRotate(e: MouseEvent, layout: Layout, el: HTMLElement) {
  * @param point 点的字符串
  */
 
-export function getPointStyle(layout:Layout, point: string) {
+export function getPointStyle(layout: Layout, point: string) {
     const { width, height } = layout;
     const hasT = /n/.test(point);
     const hasB = /s/.test(point);
@@ -181,7 +181,7 @@ export function handleZoom(e: MouseEvent, layout: Layout, mark: string, containe
     document.addEventListener("mouseup", up)
 }
 
-export const handleMove = (e: MouseEvent, layout: Layout, container: Layout) => {
+export const handleMove = (e: MouseEvent, layout: Layout, container: { width: number, height: number }) => {
     e.stopPropagation();
     e.preventDefault();
     let pos = { ...layout }
