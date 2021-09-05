@@ -1,6 +1,11 @@
 <template>
   <div class="text-area">
-    <input :value="modelValue" @input="handleInput"  @mousedown.stop=""/>
+    <input
+      :value="modelValue"
+      @input="handleInput"
+      @mousedown.stop=""
+      class="c-input"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -8,7 +13,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "c-input",
   config: {
-    active:false,
+    active: false,
     type: "c-input",
     style: {
       color: "red",
@@ -29,28 +34,23 @@ export default defineComponent({
     props: {
       modelValue: "输入框",
     },
-    ref:ref({}),
-    animations:[]
+    ref: ref({}),
+    animations: [],
   } as BaseComponent,
   props: {
     modelValue: {
       type: String,
       defalut: "",
     },
-    img: {
-      type: String,
-      default: "",
-    },
   },
-  emits:['update:modelValue'],
-  setup(props,context) {
-      const handleIntput = (e: any) => {
-          console.log('input')
-         context.emit('update:modelValue',e.target.value) 
-      }
-      return {
-        handleIntput
-      }
+  emits: ["update:modelValue"],
+  setup(props, context) {
+    const handleInput = (e: any) => {
+      context.emit("update:modelValue", e.target.value);
+    };
+    return {
+      handleInput,
+    };
   },
 });
 </script>
@@ -59,5 +59,8 @@ export default defineComponent({
 .text-area {
   width: 100%;
   height: 100%;
+}
+.c-input{
+  width: 100%;
 }
 </style>

@@ -1,1 +1,1 @@
-type customComponent = 'c-button' | 'c-text' | 'el-button' | 'el-select' | 'el-switch' | 'c-img' | 'c-input'
+type customComponent = 'c-button' | 'c-img' | 'c-input'

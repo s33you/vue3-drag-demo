@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Context from "@/layout/Context/Context.vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import MenuTop from "@/layout/MenuTop.vue";
 import RightSection from "@/layout/RightSection/index.vue";
 import LeftSection from "@/layout/LeftSection/index.vue";
@@ -23,7 +23,11 @@ export default defineComponent({
     LeftSection,
     RightSection,
   },
-});
+  setup(){
+    
+
+  }
+})
 </script>
 
 <style lang="scss">

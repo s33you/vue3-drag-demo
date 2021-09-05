@@ -1,8 +1,7 @@
-import { nextTick, reactive, ref } from "vue"
-import { clone, cloneDeep, remove } from 'lodash'
+import { reactive,} from "vue"
+import { cloneDeep } from 'lodash'
 import { ElMessage } from 'element-plus'
 import { swapIndex } from "@/utils/tools"
-import { componentList } from "@/components/custom"
 type State = {
     components: Array<BaseComponent>,
     currentComponent: BaseComponent | null
@@ -87,8 +86,14 @@ const mutations = {
     hideContextMenu(state: State) {
         state.menuLayout.show = false
     },
+    save(){
+        localStorage.setItem('contextData', JSON.stringify({
+            data: state.components
+        }))
+    },
     copy(state: State) {
         state.cloneSource = cloneDeep(state.currentComponent)
+        store.commit('hideContextMenu')
     },
     remove(state: State) {
         state.components.find((component, index) => {
@@ -96,6 +101,8 @@ const mutations = {
                 state.components.splice(index, 1)
             }
         })
+        store.commit('hideContextMenu')
+
     },
     paste(state: State) {
         if (state.cloneSource) {
@@ -103,6 +110,8 @@ const mutations = {
             state.cloneSource.layout.left = state.menuLayout.left
             store.commit('addComponent', state.cloneSource)
         }
+        store.commit('hideContextMenu')
+
     },
     moveToTop(state: State) {
         let length = state.components.length
@@ -115,6 +124,8 @@ const mutations = {
                 type: 'warning'
             })
         }
+        store.commit('hideContextMenu')
+
     },
     moveToBottom(state: State) {
         if (state.currentIndex > 0) {
@@ -126,6 +137,8 @@ const mutations = {
                 type: 'warning'
             })
         }
+        store.commit('hideContextMenu')
+
     },
     toTop(state: State) {
         let length = state.components.length
@@ -138,6 +151,8 @@ const mutations = {
                 type: 'warning'
             })
         }
+        store.commit('hideContextMenu')
+
     },
     toBottom(state: State) {
         let length = state.components.length
@@ -150,36 +165,11 @@ const mutations = {
                 type: 'warning'
             })
         }
+        store.commit('hideContextMenu')
     }
 }
 const state: State = {
-    components: new Array(500).fill(0).map(()=>{
-        return cloneDeep({
-            active: false,
-            type: "c-button",
-            style: {
-                color: "red",
-                fontSize: 19,
-                lineHeight: 40,
-                borderRadius: 10,
-                textAlign: "center",
-            },
-            layout: {
-                width: 100,
-                height: 100,
-                top: 30,
-                left: 10,
-                rotate: 0,
-            },
-            label: "按钮",
-            icon: "thumb",
-            props: {
-                text: "按钮文字",
-            },
-            ref: ref({}),
-            animations: []
-        })
-    }),
+    components: [],
     currentComponent: null,
     context: {
         width: 375,// 屏幕宽度,

@@ -49,11 +49,12 @@ const Container = defineComponent({
         ...this.element.props,
         style: getStyle(this.element.style),
       };
-      if (this.element.modelValue !== undefined) {
+      if (this.element.props.modelValue !== undefined) {
         Object.assign(props, {
           modelValue: this.element.modelValue,
-          "onUpdate:modelValue": (value: any) =>
-            (this.element.modelValue = value),
+         'onUpdate:modelValue': (value: any) =>{
+            this.element.modelValue = value
+          }
         });
       }
       return h(resolveComponent(this.element.type), props);

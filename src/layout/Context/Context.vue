@@ -73,7 +73,6 @@ export default defineComponent({
             size="mini"
           ></el-input-number>
         </div>
-
         <div
           class="canvas"
           onDrop={this.handleDrop}

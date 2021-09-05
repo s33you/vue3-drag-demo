@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+import { ElMessage } from "element-plus";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "Upload",
@@ -18,6 +19,13 @@ export default defineComponent({
 
   methods: {
     handleUpload(file: File) {
+      console.log(file)
+      if(file.size > 1024 *1024 ){
+        ElMessage.warning(
+          "文件不能超过1M"
+        )
+        return ;
+      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -29,4 +37,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>
