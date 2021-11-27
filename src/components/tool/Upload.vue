@@ -5,7 +5,10 @@
 </template>
 
 <script lang="ts">
+import { store } from "@/hooks/useComponents";
 import { ElMessage } from "element-plus";
+import { read } from "fs";
+import { reduce, result } from "lodash";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "Upload",
@@ -16,27 +19,38 @@ export default defineComponent({
     },
   },
   emits: ["update:modelValue"],
-
   methods: {
     handleUpload(file: File) {
-      console.log(file)
-      if(file.size > 1024 *1024 ){
-        ElMessage.warning(
-          "文件不能超过1M"
-        )
-        return ;
+      let oversize = false;
+      if (file.size > 300 * 1024) {
+        ElMessage.warning("文件过大,已自动压缩");
+        oversize = true;
+        // return false;
       }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.$emit("update:modelValue", reader.result);
+        if (oversize) {
+          let img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context!.drawImage(img, 0, 0, img.width, img.height);
+            let result = canvas.toDataURL(file.type, 0.3);
+            console.log(result);
+            this.$emit("update:modelValue", result);
+          };
+          img.src = reader.result as string;
+        } else {
+          this.$emit("update:modelValue", reader.result);
+        }
       };
-      return false;
     },
   },
 });
 </script>
 
 <style lang="scss" scoped>
-
 </style>
